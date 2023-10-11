@@ -1,7 +1,9 @@
 package com.sapient.router;
 
+import com.sapient.config.TheatreApiInfo;
 import com.sapient.handler.TheatricalDeleteHandler;
 import com.sapient.handler.TheatricalHandler;
+import com.sapient.handler.TheatricalModifyHandler;
 import com.sapient.handler.TheatricalSearchHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,17 +18,12 @@ import static org.springframework.web.reactive.function.server.RequestPredicates
 @Configuration
 public class AppRouter {
 
-  /* private final TheatricalHandler theatricalHandler;
-
-  @Autowired
-  public AppRouter(TheatricalHandler handler) {
-      this.theatricalHandler = handler;
-  }*/
-
   @Bean
+  @TheatreApiInfo
   public RouterFunction<ServerResponse> theatricalRoute(
       TheatricalHandler theatricalHandler,
       TheatricalSearchHandler theatricalSearchHandler,
+      TheatricalModifyHandler theatricalModifyHandler,
       TheatricalDeleteHandler theatricalRemoveHandler) {
     return RouterFunctions.route(
             POST("/v1/defineShows").and(acceptMediaType()), theatricalHandler::postData)
@@ -36,17 +33,14 @@ public class AppRouter {
         .andRoute(
             DELETE("v1/deleteByDateAndTheater").and(acceptMediaType()),
             theatricalRemoveHandler::deleteByDateAndTheater)
-        /*   .andRoute(
-        DELETE("v1/deleteByDateAndCompany")
-            .and(acceptMediaType()), theatricalRemoveHandler::deleteByDateAndCompany)*/
         .andRoute(
             GET("v1/findById/{doc_id}").and(acceptMediaType()), theatricalSearchHandler::findById)
         .andRoute(
-            GET("v1/findByDateAndTheater").and(acceptMediaType()), theatricalSearchHandler::findByDateAndTheater);
-        /*.andRoute(
-            GET("v1/deleteByDateAndCompany").and(acceptMediaType()), theatricalSearchHandler::findByDateAndCompany);*/
-
-    // .andRoute(PATCH("").and(acceptMediaType()),theatricalHandler::updateData);
+            GET("v1/findByDateAndTheater").and(acceptMediaType()),
+            theatricalSearchHandler::findByDateAndTheater)
+        .andRoute(
+            PUT("v1/replaceById/{doc_id}").and(acceptMediaType()),
+            theatricalModifyHandler::replaceById);
   }
 
   private static RequestPredicate acceptMediaType() {

@@ -1,70 +1,88 @@
 # For Running the app on local
 
-## Step 1: run the below command inside the project folder:
+### Recommended IDE and JDK version- 
+   Intellij Idea and JDK 11 
+
+### Use of Maven Wrapper
+Generate necessary files for Maven Wrapper running from IDE (optionally provide version)
+```
+mvn wrapper:wrapper 
+``` 
+
+### Run the below command inside the project folder: (from terminal)
 
 ```
-mvn clean install
+./mvnw clean package
+```
+For Windows machine
+```
+mvnw.cmd clean package
 ```
 It will generate a target folder with application jar in it
 
+## RUN LOCALLY (NON-CONTAINERISED VERSION)
+### Run locally without containerised version
 
-## Step 2: Run the below command to tag and build the docker image
+We can run locally (Require Mongo DB and Java  to be installed) running following command
 
 ```
-docker build -t <your_dockerhub_id>/<app_name> .
+./mvnw spring-boot:run
+```
+## RUN CONTAINERISED VERSION
+### Run the below command to tag and build the docker image
+
+```
+docker build -t <app-name>:<tag-name> .
 ```
 e.g. 
 ```
-docker build -t dummyuser/blogging-app .
+docker build -t theaterservice:1.0.0 .
 ```
 
-Don't miss the dot in the end of above mentioned command.
-
-## Step 3: To run the app on your local docker instance execute below command
+### Create network
 ```
-docker run -p 8080:8080 <your_dockerhub_id>/blogging-app
+docker network create theater-net
 ```
-
-## Step 4: Now you can access the app on your browser or rest client on localhost:8080. Sample endpoint is 
+### Run Mongo DB as container
 ```
-GET: localhost:8080/posts
+docker run -d --name mongodb -p 27017:27017 --net theater-net mongo:4.4
 ```
 
-# For Running the app on kubernetes After the step 1 and step 2 execute below steps
-
-## Step 5: Push your image to dockerhub but running below command
+### To run the app on your local docker instance execute below command
 ```
-docker push <your_dockerhub_id>/blogging-app
+docker run -d --name <container-name> -p 8082:8082 <image-name>:<tag-name>
 ```
 
-## Step 6: Login into GCP and create a kubernetes cluster with the name "blogging-app-cluster" or any other name of your choice
 
-## Step 7: Open blogservice.yaml file which is included with the codebase and change the placeholder <your_dockerhub_id> at line 30 with your dockerhub id. 
-
-## Step 8: Open gcp cloud shell and create a new file with name "blogservice.yaml" using editor. Paste the content of  blogservice.yaml from previous step
-
-## Step 9: Run below commands on gcp cloud shell to configure project and compute zone 
-
+## Step 4: Now you can access the app on your browser or rest client on localhost:<App Port>. Sample endpoint is 
 ```
-gcloud config set project <your_project_name>
-gcloud config set compute/zone <your_compute_zone>
+POST: localhost:8082/v1/defineShows
 ```
 
-## Step 10: Fetch the credentials using below command:
+# API Documentation
+### API Documentation can be browsed and executed locally after running the app at the below URL [ Mind your App running Port]
 ```
-gcloud container clusters get-credentials blogging-app-cluster
+http://localhost:8080/swagger-ui.html
+```
+# Run locally using Docker Compose
+### Run below commands
+```
+docker compose build
+```
+```
+docker compose -f docker-compose.yml up -d
+```
+### Important: Please note in Mac M1 when logging into the app container, it is showing cannot connect to mongo db. However after few seconds it works fine, although depends on is present in the docker-compose file
+
+# Postman collection
+### Postman collection can be imported in Postman. There is no specific Environment file. The collection is present in the below project source code folder
+```
+postman_collection
 ```
 
-## Step 11: run below command in gcp cloud shell to deploy the service. 
+# Helm Charts
+### Helm charts are inside below folder. It has to be configured as per need
 
 ```
-kubectl apply -f blogservice.yaml
+charts/theater_app
 ```
-
-## Step 12: Run Below command to get the external IP. (If external ip is not visible, wait for few seconds and run command again)
-
-```
-kubectl get svc
-```
-
-## PS: Make sure you stop the service when not in use to avoid unnecessary billing charges

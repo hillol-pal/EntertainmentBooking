@@ -1,13 +1,15 @@
 package com.sapient.handler;
 
+
+import com.sapient.exceptions.DocumentNotFoundException;
+import com.sapient.exceptions.DataValidationException;
 import com.sapient.service.impl.TheatricalServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
@@ -60,14 +62,21 @@ public class TheatricalDeleteHandler {
         .onErrorResume(this::getErrorResponse);
   }*/
 
-  private Mono<ServerResponse> getSuccessResponseFlux(Void unused) {
+/*  private Mono<ServerResponse> getSuccessResponseFlux(Void unused) {
 
     return ServerResponse.noContent().build();
-  }
+  }*/
 
-  private Mono<ServerResponse> getErrorResponse(Throwable throwable) {
+  private Mono<ServerResponse> getErrorResponse(Throwable err) {
 
-    return ServerResponse.status(400).bodyValue(throwable.getCause());
+    log.error(" Handling Error => {}",err.getStackTrace());
+    if(err instanceof DocumentNotFoundException) {
+      return ServerResponse.status(HttpStatus.NOT_FOUND).bodyValue(((DocumentNotFoundException) err).getMsg());
+    }else if(err instanceof DataValidationException){
+      return ServerResponse.status(HttpStatus.BAD_REQUEST).bodyValue(((DataValidationException) err).getMsg());
+    }else {
+      return ServerResponse.status(HttpStatus.INTERNAL_SERVER_ERROR).bodyValue(err.getMessage());
+    }
   }
 
   private Mono<ServerResponse> getSuccessResponse(Object response) {

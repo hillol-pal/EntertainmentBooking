@@ -1,0 +1,253 @@
+{
+	"info": {
+		"_postman_id": "3de80ac5-b32a-42d7-984c-77ac95bf19a6",
+		"name": "THEATRICAL SERVICE",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5676712"
+	},
+	"item": [
+		{
+			"name": "findDocumentByID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/v1/findById/651953ac552c44222eaf4217",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v1",
+						"findById",
+						"651953ac552c44222eaf4217"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findDocumentByDateAndTheater",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/v1/findByDateAndTheater?date=2023-10-03&theater_name=PRIYA1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v1",
+						"findByDateAndTheater"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2023-10-03"
+						},
+						{
+							"key": "theater_name",
+							"value": "PRIYA1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "defineShows-1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"2023-10-11\",\n    \"theaterName\": \"PVR-NORTH-KOL\",\n    \"address\": \"North kol\",\n    \"latitude\": \"45.98\",\n    \"longitude\": \"98.78\",\n    \"city\": \"KOL\",\n    \"company\": \"PVR\",\n    \"shows\": [\n        {\n            \"movie_name\": \"Jawan\",\n            \"auditorium_id\": \"12\",\n            \"showtimes\": [\n                {\n                    \"start_time\": \"12:00\",\n                    \"end_time\": \"15:00\"\n                },\n                {  \"start_time\": \"15:00\",\n                    \"end_time\": \"18:00\"\n                }\n            ]\n        },\n        {\n            \"movie_name\": \"The Talented Mr. Replay\",\n            \"auditorium_id\": \"16\",\n            \"showtimes\": [\n                {\n                    \"start_time\": \"12:00\",\n                    \"end_time\": \"15:00\"\n                },\n                {  \"start_time\": \"15:00\",\n                    \"end_time\": \"18:00\"\n                }\n            ]\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/v1/defineShows",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v1",
+						"defineShows"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "defineShows-2",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"2023-10-11\",\n    \"theaterName\": \"INOX\",\n    \"address\": \"Central kol\",\n    \"latitude\": \"45.98\",\n    \"longitude\": \"98.78\",\n    \"city\": \"KOL\",\n    \"company\": \"INOX\",\n    \"shows\": [\n        {\n            \"movie_name\": \"Silver Linings Play book\",\n            \"auditorium_name\": null,\n            \"auditorium_id\": 12,\n            \"showtimes\": [\n                {\n                    \"start_time\": \"12:00\",\n                    \"end_time\": \"15:00\"\n                },\n                {\n                    \"start_time\": \"15:00\",\n                    \"end_time\": \"18:00\"\n                }\n            ]\n        },\n        {\n            \"movie_name\": \"The Talented Mr. Replay\",\n            \"auditorium_name\": null,\n            \"auditorium_id\": 16,\n            \"showtimes\": [\n                {\n                    \"start_time\": \"12:00\",\n                    \"end_time\": \"15:00\"\n                },\n                {\n                    \"start_time\": \"15:00\",\n                    \"end_time\": \"18:00\"\n                }\n            ]\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/v1/defineShows",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v1",
+						"defineShows"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "defineShows-3",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"2023-10-11\",\n    \"theaterName\": \"PVR-NORTH-KOL\",\n    \"address\": \"North kol\",\n    \"latitude\": \"45.98\",\n    \"longitude\": \"98.78\",\n    \"city\": \"KOL\",\n    \"company\": \"PVR\",\n    \"shows\": [\n        {\n            \"movie_name\": \"Jawan\",\n            \"auditorium_id\": \"12\",\n            \"showtimes\": [\n                {\n                    \"start_time\": \"12:00\",\n                    \"end_time\": \"15:00\"\n                },\n                {  \"start_time\": \"15:00\",\n                    \"end_time\": \"18:00\"\n                }\n            ]\n        },\n        {\n            \"movie_name\": \"The Talented Mr. Replay\",\n            \"auditorium_id\": \"16\",\n            \"showtimes\": [\n                {\n                    \"start_time\": \"12:00\",\n                    \"end_time\": \"15:00\"\n                },\n                {  \"start_time\": \"15:00\",\n                    \"end_time\": \"18:00\"\n                }\n            ]\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/v1/defineShows",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v1",
+						"defineShows"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "defineShows",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"date\": \"2023-10-03\",\n    \"theaterName\": \"PRIYA1\",\n    \"address\": \"Central kol\",\n    \"latitude\": \"42.98\",\n    \"longitude\": \"56.78\",\n    \"city\": \"KOL\",\n    \"company\": \"PRIYA GROUPS1\",\n    \"shows\": [\n        {\n            \"movie_name\": \"Silver Linings Play book\",\n            \"auditorium_id\": \"12\",\n            \"showtimes\": [\n                {\n                    \"start_time\": \"12:00\",\n                    \"end_time\": \"15:00\"\n                },\n                {  \"start_time\": \"15:00\",\n                    \"end_time\": \"18:00\"\n                }\n            ]\n        },\n        {\n            \"movie_name\": \"The Talented Mr. Replay\",\n            \"auditorium_id\": \"16\",\n            \"showtimes\": [\n                {\n                    \"start_time\": \"12:00\",\n                    \"end_time\": \"15:00\"\n                }\n            ]\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8082/v1/replaceById/6519828f301aff628fd63517",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v1",
+						"replaceById",
+						"6519828f301aff628fd63517"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteDocumentById",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/v1/deleteById/6526a54",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v1",
+						"deleteById",
+						"6526a54"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteBydateAndTheater",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8082/v1/deleteByDateAndTheater?date=2023-10-03&theater_name=SAK",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8082",
+					"path": [
+						"v1",
+						"deleteByDateAndTheater"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2023-10-03"
+						},
+						{
+							"key": "theater_name",
+							"value": "SAK"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,5 +1,6 @@
 package com.sapient.service.impl;
 
+import com.sapient.exceptions.DocumentNotFoundException;
 import com.sapient.model.Theatre;
 import com.sapient.repository.TheatreRepository;
 import com.sapient.service.TheatricalService;
@@ -10,6 +11,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
+import java.util.function.Function;
 
 @Service
 @Slf4j
@@ -24,26 +26,25 @@ public class TheatricalServiceImpl implements TheatricalService {
   }
 
   @Override
-  public Mono<Theatre> saveData(Theatre theatreShows) {
+  public Mono<Theatre> saveData(Theatre theatreShow) {
 
-    return reactiveRepo.save(theatreShows);
+    return reactiveRepo.save(theatreShow);
   }
 
   @Override
   public Mono<Void> deleteById(String id) {
-    return reactiveRepo.deleteById(id);
+    return reactiveRepo.deleteById(id).onErrorResume(handleError());
   }
 
   @Override
   public Mono<Void> deleteByDateAndTheater(LocalDate date, String theater) {
-    return reactiveRepo.deleteByDateAndTheaterName(date, theater);
+    return reactiveRepo.deleteByDateAndTheaterName(date, theater).onErrorResume(handleError());
   }
 
   @Override
   public Flux<Void> deleteByDateAndCompany(LocalDate date, String company) {
     return reactiveRepo.deleteByDateAndCompany(date, company);
   }
-
 
   @Override
   public Mono<Theatre> findById(String id) {
@@ -58,5 +59,17 @@ public class TheatricalServiceImpl implements TheatricalService {
   @Override
   public Flux<Theatre> findByDateAndCompany(LocalDate date, String company) {
     return reactiveRepo.findByDateAndCompany(date, company);
+  }
+
+  private static Function<Throwable, Mono<? extends Void>> handleError() {
+
+    return err -> {
+      log.info("There is error. need to manage it: {}", err.getMessage());
+      if (err.getMessage().contains("Not Found")) {
+        return Mono.error(new DocumentNotFoundException(err.getMessage()));
+      } else {
+        throw new RuntimeException(err.getMessage());
+      }
+    };
   }
 }

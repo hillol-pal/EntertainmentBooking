@@ -61,6 +61,8 @@ public class TheatricalSearchHandler {
                 .switchIfEmpty(ServerResponse.notFound().build());
     }
 
+
+
     private Mono<ServerResponse> getSuccessResponse(Object response) {
 
         return ServerResponse.ok().contentType(MediaType.APPLICATION_JSON).bodyValue(response);
